@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RutaEmpresa Col - Guía de Constitución Empresarial 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        [x-cloak] { display: none !important; }
+
+        /* Animaciones para el muñequito corriendo en la transición */
+        @keyframes runCycle {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-6px) rotate(3deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-6px) rotate(-3deg); }
+        }
+        @keyframes legSwingFront {
+            0%, 100% { transform: rotate(-28deg); }
+            50% { transform: rotate(32deg); }
+        }
+        @keyframes legSwingBack {
+            0%, 100% { transform: rotate(32deg); }
+            50% { transform: rotate(-28deg); }
+        }
+        @keyframes roadMove {
+            0% { stroke-dashoffset: 40; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .runner-body { animation: runCycle 0.45s infinite ease-in-out; transform-origin: center; }
+        .runner-leg-1 { animation: legSwingFront 0.45s infinite ease-in-out; transform-origin: 50px 52px; }
+        .runner-leg-2 { animation: legSwingBack 0.45s infinite ease-in-out; transform-origin: 50px 52px; }
+        .road-line { stroke-dasharray: 12 8; animation: roadMove 0.5s infinite linear; }
+        .loader-bar { animation: progressFill 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+        /* Scrollbar estilizada */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col selection:bg-emerald-500 selection:text-slate-950" x-data="appData()" x-init="initApp()">
+
+    <!-- PANTALLA DE TRANSICIÓN ANIMADA (MUÑEQUITO CORRIENDO) -->
+    <div x-show="isTransitioning" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6">
+        
+        <div class="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl text-center relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+            <!-- Escena SVG: Muñequito corriendo hacia edificio empresarial -->
+            <div class="w-full h-36 flex items-center justify-center mb-4">
+                <svg viewBox="0 0 260 110" class="w-full max-w-[260px] h-auto overflow-visible">
+                    <!-- Pista / Camino -->
+                    <line x1="15" y1="88" x2="245" y2="88" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="15" y1="94" x2="245" y2="94" stroke="#10b981" stroke-width="2" class="road-line"/>
+
+                    <!-- Edificio Meta (Empresa Formalizada) -->
+                    <g transform="translate(195, 22)">
+                        <rect x="0" y="10" width="42" height="56" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                        <rect x="8" y="18" width="8" height="8" rx="1" fill="#10b981"/>
+                        <rect x="26" y="18" width="8" height="8" rx="1" fill="#10b981"/>
+                        <rect x="8" y="32" width="8" height="8" rx="1" fill="#34d399"/>
+                        <rect x="26" y="32" width="8" height="8" rx="1" fill="#34d399"/>
+                        <rect x="16" y="48" width="10" height="18" rx="1" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+                        <!-- Banderín superior -->
+                        <line x1="21" y1="0" x2="21" y2="10" stroke="#10b981" stroke-width="2"/>
+                        <polygon points="21,0 35,4 21,8" fill="#10b981"/>
+                    </g>
+
+                    <!-- Muñequito Emprendedor Corriendo -->
+                    <g transform="translate(55, 12)" class="runner-body">
+                        <!-- Cabeza -->
+                        <circle cx="50" cy="20" r="9" fill="#10b981"/>
+                        <!-- Maletín ejecutivo -->
+                        <rect x="61" y="42" width="13" height="10" rx="2" fill="#f59e0b" stroke="#0f172a" stroke-width="1.2"/>
+                        <path d="M65 42 V39 H70 V42" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+                        <!-- Torso -->
+                        <line x1="50" y1="30" x2="50" y2="52" stroke="#f8fafc" stroke-width="4.5" stroke-linecap="round"/>
+                        <!-- Brazos -->
+                        <polyline points="50,35 63,43" fill="none" stroke="#f8fafc" stroke-width="3.5" stroke-linecap="round"/>
+                        <polyline points="50,35 38,44" fill="none" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"/>
+                        <!-- Pierna 1 -->
+                        <g class="runner-leg-1">
+                            <polyline points="50,52 58,64 52,75" fill="none" stroke="#f8fafc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                        <!-- Pierna 2 -->
+                        <g class="runner-leg-2">
+                            <polyline points="50,52 41,63 34,72" fill="none" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                    </g>
+
+                    <!-- Líneas de velocidad -->
+                    <line x1="25" y1="35" x2="48" y2="35" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                    <line x1="18" y1="48" x2="42" y2="48" stroke="#34d399" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                    <line x1="28" y1="60" x2="46" y2="60" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+                </svg>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-white tracking-tight" x-text="transitionText">Preparando tu ruta legal...</h3>
+            <p class="text-xs text-slate-400 mt-1.5">Cargando requisitos sectoriales, normativa DIAN/RUES y plantillas editables</p>
+
+            <!-- Barra de carga -->
+            <div class="w-full bg-slate-800 h-2.5 rounded-full mt-5 overflow-hidden border border-slate-700/70">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+    <div x-show="toast.visible" x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 translate-y-4"
+         class="fixed bottom-24 right-6 z-50 bg-slate-900 border border-emerald-500/50 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 max-w-sm">
+        <span class="bg-emerald-500/20 text-emerald-400 p-1.5 rounded-xl text-sm">📥</span>
+        <div class="text-xs">
+            <p class="font-bold text-emerald-400" x-text="toast.title"></p>
+            <p class="text-slate-300 mt-0.5" x-text="toast.message"></p>
+        </div>
+    </div>
+
+    <!-- HEADER GLOBAL -->
+    <header class="border-b border-slate-800/90 bg-slate-950/90 backdrop-blur-md sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+            <!-- Logo / Volver al Home -->
+            <button @click="goToHome()" class="flex items-center gap-3 text-left group focus:outline-none">
+                <div class="bg-gradient-to-br from-emerald-400 to-emerald-600 p-2 rounded-xl text-slate-950 font-black shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition">
+                    🏢
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg sm:text-xl font-extrabold tracking-tight text-white">RutaEmpresa <span class="text-emerald-400">Col</span></span>
+                        <span class="hidden md:inline-block text-[11px] bg-slate-900 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-semibold">Edición 2026</span>
+                    </div>
+                    <span class="hidden sm:block text-[11px] text-slate-400">Guía Interactiva de Formalización en Colombia</span>
+                </div>
+            </button>
+
+            <!-- Navegación -->
+            <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 no-scrollbar">
+                <button @click="goToHome()"
+                        :class="view === 'home' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap">
+                    🏠 Inicio
+                </button>
+                <button @click="enterApp('ruta')"
+                        :class="view === 'app' && activeTab === 'ruta' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap">
+                    🧭 Ruta & Checklist
+                </button>
+                <button @click="enterApp('descargables')"
+                        :class="view === 'app' && activeTab === 'descargables' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap flex items-center gap-1">
+                    📂 Descargables
+                </button>
+                <button @click="enterApp('simulador')"
+                        :class="view === 'app' && activeTab === 'simulador' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap">
+                    🧮 Tarifas
+                </button>
+                <button @click="enterApp('test')"
+                        :class="view === 'app' && activeTab === 'test' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap">
+                    ⚖️ Test Sociedad
+                </button>
+                <button @click="enterApp('faq')"
+                        :class="view === 'app' && activeTab === 'faq' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40' : 'text-slate-400 hover:text-white border-transparent hover:bg-slate-900'"
+                        class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold border transition whitespace-nowrap">
+                    ❓ FAQ
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 1: HOME (PANTALLA DE BIENVENIDA)                                -->
+    <!-- ===================================================================== -->
+    <section x-show="view === 'home'" class="flex-1 flex flex-col justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full">
+            <!-- Hero Principal -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold px-3.5 py-1.5 rounded-full">
+                        <span>🇨🇴</span>
+                        <span>Normativa Mercantil & Tributaria Colombiana · Actualizado 2026</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
+                        Formaliza tu empresa en Colombia <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">paso a paso y sin enredos.</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        Filtra tu ruta según el tipo de sociedad (<strong>S.A.S., Persona Natural, Ltda. o S.A.</strong>), selecciona entre <strong>11 sectores económicos</strong>, lleva el control con un checklist interactivo y descarga minutas y documentos editables en Word.
+                    </p>
+
+                    <!-- Botones de Acción Principales -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                        <button @click="startWithAnimation('ruta')"
+                                class="group bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-base px-8 py-4 rounded-2xl shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 transition transform hover:-translate-y-0.5 cursor-pointer">
+                            <span>🚀 Iniciar Ruta Empresarial</span>
+                            <span class="group-hover:translate-x-1 transition-transform">→</span>
+                        </button>
+
+                        <button @click="startWithAnimation('descargables')"
+                                class="bg-slate-900 hover:bg-slate-800 text-white border border-slate-700 hover:border-emerald-500/40 font-semibold text-sm px-6 py-4 rounded-2xl flex items-center justify-center gap-2 transition cursor-pointer">
+                            <span>📄 Ir a Plantillas Editables (.DOC)</span>
+                        </button>
+                    </div>
+
+                    <!-- Indicadores rápidos -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800/80">
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-emerald-400">11</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Sectores económicos + Otros</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-white">4</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Tipos de sociedad filtrables</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-emerald-400">5+</p>
+                            <p class="text-xs text-slate-400 mt-0.5">Formatos Word editables</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Visual Interactiva Derecha -->
+                <div class="lg:col-span-5">
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                        
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Vista Previa del Sistema</span>
+                            <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700">Guardado Automático</span>
+                        </div>
+
+                        <div class="space-y-3.5">
+                            <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-lg font-bold">✓</div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-white">Filtro Societario Inteligente</h4>
+                                    <p class="text-xs text-slate-400">Ajusta requisitos entre S.A.S., Persona Natural, Ltda. y S.A.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-teal-500/15 text-teal-400 flex items-center justify-center text-lg font-bold">📑</div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-white">Minutas & Actas Descargables</h4>
+                                    <p class="text-xs text-slate-400">Descarga archivos .DOC listos para abrir y editar en Word.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-lg font-bold">🔗</div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-white">Portales Oficiales Directos</h4>
+                                    <p class="text-xs text-slate-400">Enlaces verificados a RUES, DIAN Muisca, VUE, SIC e INVIMA.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-950/80 border border-slate-800 p-4 rounded-2xl flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-lg font-bold">🤖</div>
+                                <div class="flex-1">
+                                    <h4 class="text-sm font-bold text-white">RutaBot 24/7 Ampliado</h4>
+                                    <p class="text-xs text-slate-400">Resuelve dudas sobre CIIU, impuestos, RST, INVIMA o contratación.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button @click="startWithAnimation('ruta')" class="w-full mt-6 bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 border border-emerald-500/30 font-bold py-3 rounded-xl text-sm transition cursor-pointer">
+                            Comenzar mi Checklist Ahora →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloques de Características -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6">
+                    <div class="text-2xl mb-3">🎯</div>
+                    <h3 class="text-base font-bold text-white">1. Configura tu Perfil</h3>
+                    <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Elige el tipo de figura jurídica y tu sector económico (incluyendo actividad personalizada en "Otros").</p>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6">
+                    <div class="text-2xl mb-3">✅</div>
+                    <h3 class="text-base font-bold text-white">2. Ejecuta el Checklist</h3>
+                    <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Marca cada sub-requisito y paso completado. Tu avance queda guardado automáticamente en el navegador.</p>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-800/80 rounded-2xl p-6">
+                    <div class="text-2xl mb-3">📥</div>
+                    <h3 class="text-base font-bold text-white">3. Descarga y Edita</h3>
+                    <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Obtén estatutos, actas, cartas bancarias y tu hoja de ruta personalizada en documentos editables.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- VISTA 2: APLICACIÓN PRINCIPAL (RUTA, DESCARGABLES, SIMULADOR, ETC.)   -->
+    <!-- ===================================================================== -->
+    <main x-show="view === 'app'" x-cloak class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+
+        <!-- =============================================================== -->
+        <!-- TAB 1: RUTA MERCANTIL & CHECKLIST DINÁMICO                      -->
+        <!-- =============================================================== -->
+        <div x-show="activeTab === 'ruta'" class="space-y-8">
+            
+            <!-- PANEL DE CONFIGURACIÓN: TIPO DE SOCIEDAD + SECTOR -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-8">
+                
+                <!-- Paso A: Filtro por Tipo de Sociedad -->
+                <div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Paso 1 · Filtro Jurídico</span>
+                            <h2 class="text-lg sm:text-xl font-extrabold text-white">Selecciona el Tipo de Sociedad o Figura Legal:</h2>
+                        </div>
+                        <button @click="activeTab = 'test'" class="text-xs text-emerald-400 hover:underline font-semibold self-start sm:self-auto">
+                            ¿No sabes cuál elegir? Haz el Test Societario →
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                        <template x-for="soc in societyTypes" :key="soc.id">
+                            <button @click="selectSociety(soc.id)"
+                                    :class="selectedSociety === soc.id 
+                                        ? 'bg-emerald-500/15 border-emerald-500 ring-1 ring-emerald-500/50 shadow-lg shadow-emerald-500/10' 
+                                        : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'"
+                                    class="p-4 rounded-2xl border text-left transition flex flex-col justify-between cursor-pointer">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-md"
+                                              :class="selectedSociety === soc.id ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-300'"
+                                              x-text="soc.badge"></span>
+                                        <span x-show="selectedSociety === soc.id" class="text-emerald-400 text-sm font-bold">● Activo</span>
+                                    </div>
+                                    <h3 class="font-bold text-sm text-white" x-text="soc.name"></h3>
+                                    <p class="text-xs text-slate-400 mt-1 leading-relaxed" x-text="soc.summary"></p>
+                                </div>
+                                <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                                    <span x-text="soc.partners"></span>
+                                    <span class="text-emerald-400 font-medium" x-text="soc.docType"></span>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Paso B: Selector Amplio de Sectores Económicos -->
+                <div class="pt-6 border-t border-slate-800">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Paso 2 · Actividad Económica (CIIU)</span>
+                            <h2 class="text-lg sm:text-xl font-extrabold text-white">Selecciona tu Sector Económico:</h2>
+                        </div>
+                        <span class="text-xs text-slate-400" x-text="`Mostrando ${sectors.length} sectores disponibles`"></span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                        <template x-for="sec in sectors" :key="sec.id">
+                            <button @click="selectSector(sec.id)"
+                                    :class="selectedSector === sec.id 
+                                        ? 'bg-emerald-500/15 border-emerald-500 text-emerald-400 shadow-md' 
+                                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'"
+                                    class="flex flex-col items-start p-3.5 rounded-2xl border text-left transition cursor-pointer">
+                                <span class="text-2xl mb-1.5" x-text="sec.icon"></span>
+                                <span class="font-bold text-xs text-white leading-snug" x-text="sec.label"></span>
+                                <span class="text-[11px] text-slate-400 line-clamp-2 mt-1" x-text="sec.desc"></span>
+                            </button>
+                        </template>
+                    </div>
+
+                    <!-- Campo Personalizado si elige "Otros" -->
+                    <div x-show="selectedSector === 'otros'" x-transition class="mt-4 bg-slate-950 border border-emerald-500/40 rounded-2xl p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div class="flex-1">
+                            <label class="block text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
+                                ✏️ Especifica tu Actividad Económica Personalizada:
+                            </label>
+                            <input type="text" x-model="customSectorName" @input="saveProgress()"
+                                   placeholder="Ej: Agencia de marketing digital, Taller automotriz, Importación de repuestos..."
+                                   class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div class="text-xs text-slate-400 sm:max-w-xs">
+                            Este nombre se incluirá automáticamente en tu checklist descargable y en tus minutas editables.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARRA DE SEGUIMIENTO Y PROGRESO PERSISTENTE -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-sm font-extrabold text-white">Seguimiento de Formalización:</span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" x-text="currentSocietyObj.name"></span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700" x-text="effectiveSectorLabel"></span>
+                        </div>
+                        <p class="text-xs text-slate-400">
+                            Pasos completados: <strong class="text-white" x-text="completedMainStepsCount"></strong> de <strong class="text-white" x-text="currentSteps.length"></strong> · 
+                            Sub-requisitos marcados: <strong class="text-emerald-400" x-text="completedSubReqsCount"></strong> de <strong class="text-slate-300" x-text="totalSubReqsCount"></strong>
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:w-1/2">
+                        <div class="flex-1 flex items-center gap-3">
+                            <div class="w-full bg-slate-800 rounded-full h-3.5 overflow-hidden border border-slate-700">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" :style="`width: ${progressPercentage}%`"></div>
+                            </div>
+                            <span class="text-sm font-black text-emerald-400 min-w-[44px] text-right" x-text="`${progressPercentage}%`"></span>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button @click="downloadCustomChecklist()" class="bg-emerald-500/15 hover:bg-emerald-500 hover:text-slate-950 text-emerald-400 border border-emerald-500/30 px-3 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer">
+                                📥 Exportar Avance (.DOC)
+                            </button>
+                            <button @click="resetProgress()" class="bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 border border-slate-700 px-3 py-2 rounded-xl text-xs font-semibold transition whitespace-nowrap cursor-pointer" title="Reiniciar marcas de esta ruta">
+                                ↺ Reiniciar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LISTA INTERACTIVA DE PASOS (CHECKLIST MULTINIVEL + ARCHIVOS + ENLACES VERIFICADOS) -->
+            <div class="space-y-5">
+                <template x-for="(step, sIdx) in currentSteps" :key="step.id">
+                    <div :class="isStepCompleted(step) 
+                            ? 'bg-emerald-950/20 border-emerald-500/40' 
+                            : (isStepInProgress(step) ? 'bg-slate-900/90 border-amber-500/40' : 'bg-slate-900/60 border-slate-800 hover:border-slate-700')"
+                         class="border rounded-2xl p-5 sm:p-6 transition shadow-md">
+                        
+                        <div class="flex items-start gap-4">
+                            <!-- Checkbox Principal del Paso -->
+                            <button @click="toggleMainStep(step)"
+                                    :class="isStepCompleted(step) ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-600 text-transparent hover:border-emerald-400'"
+                                    class="mt-1 w-7 h-7 rounded-lg border-2 flex items-center justify-center font-black text-sm transition shrink-0 cursor-pointer"
+                                    title="Marcar paso completo">
+                                ✓
+                            </button>
+
+                            <div class="flex-1 min-w-0">
+                                <!-- Cabecera del Paso -->
+                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                    <h3 :class="isStepCompleted(step) ? 'line-through text-slate-400' : 'text-white'" class="text-base sm:text-lg font-extrabold" x-text="step.title"></h3>
+                                    
+                                    <!-- Badge de Estado -->
+                                    <span x-show="isStepCompleted(step)" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                        ✅ Completado
+                                    </span>
+                                    <span x-show="!isStepCompleted(step) && isStepInProgress(step)" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                                        ⏳ En curso
+                                    </span>
+                                    <span x-show="!isStepCompleted(step) && !isStepInProgress(step)" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                                        ○ Pendiente
+                                    </span>
+                                </div>
+
+                                <p class="text-slate-300 text-sm mt-1.5 leading-relaxed" x-text="step.desc"></p>
+
+                                <!-- Entidad y Tiempo estimado -->
+                                <div class="flex flex-wrap items-center gap-2 mt-3">
+                                    <span class="text-xs font-medium bg-slate-950 text-slate-300 px-3 py-1 rounded-lg border border-slate-800" x-text="`🏛️ Entidad: ${step.entity}`"></span>
+                                    <span class="text-xs font-medium bg-slate-950 text-emerald-400 px-3 py-1 rounded-lg border border-slate-800" x-text="`⏱️ Tiempo estimado: ${step.duration}`"></span>
+                                </div>
+
+                                <!-- Sub-checklist de Requisitos Individuales -->
+                                <div class="mt-4 bg-slate-950/80 rounded-xl p-4 border border-slate-800/90">
+                                    <div class="flex items-center justify-between mb-2.5">
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Checklist de Documentos & Requisitos (haz clic para marcar):</span>
+                                        <span class="text-[11px] text-emerald-400 font-semibold" x-text="`${getStepCheckedCount(step)}/${step.reqs.length} listos`"></span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                                        <template x-for="(req, rIdx) in step.reqs" :key="rIdx">
+                                            <label @click.prevent="toggleSubReq(step, rIdx)"
+                                                   class="flex items-start gap-2.5 p-2 rounded-lg bg-slate-900/70 hover:bg-slate-800/80 border border-slate-800/80 cursor-pointer transition select-none">
+                                                <span :class="isSubReqChecked(step.id, rIdx) ? 'bg-emerald-500 border-emerald-400 text-slate-950' : 'bg-slate-950 border-slate-600 text-transparent'"
+                                                      class="w-4 h-4 mt-0.5 rounded border flex items-center justify-center text-[10px] font-black shrink-0 transition">
+                                                    ✓
+                                                </span>
+                                                <span :class="isSubReqChecked(step.id, rIdx) ? 'line-through text-slate-500' : 'text-slate-200'" class="text-xs leading-snug" x-text="req"></span>
+                                            </label>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Barra Inferior: Enlaces Oficiales Verificados + Archivos Descargables Anexos -->
+                                <div class="mt-4 flex flex-wrap items-center gap-2.5" x-show="(step.links && step.links.length > 0) || (step.attachments && step.attachments.length > 0)">
+                                    <!-- Enlaces Oficiales -->
+                                    <template x-for="lnk in step.links" :key="lnk.url">
+                                        <a :href="lnk.url" target="_blank" rel="noopener noreferrer"
+                                           class="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">
+                                            <span>🔗</span>
+                                            <span x-text="lnk.label"></span>
+                                            <span class="text-slate-400 text-[10px]">↗</span>
+                                        </a>
+                                    </template>
+
+                                    <!-- Archivos Descargables Anexos al Paso -->
+                                    <template x-for="att in step.attachments" :key="att.docId">
+                                        <button @click="downloadDocument(att.docId)"
+                                                class="inline-flex items-center gap-1.5 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                                            <span>📥</span>
+                                            <span x-text="att.label"></span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 2: CENTRO DE DESCARGABLES EDITABLES (.DOC / .TXT)           -->
+        <!-- =============================================================== -->
+        <div x-show="activeTab === 'descargables'" class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Plantillas Legales & Administrativas</span>
+                        <h2 class="text-2xl font-extrabold text-white mt-1">📂 Centro de Documentos Descargables y Editables</h2>
+                        <p class="text-sm text-slate-400 mt-1">
+                            Todos los archivos se generan en formato <strong class="text-slate-200">.DOC (Microsoft Word / Google Docs)</strong> para que puedas abrirlos en tu computador, rellenar los campos entre corchetes <code class="text-emerald-400">[...]</code> y adaptarlos a tu empresa.
+                        </p>
+                    </div>
+                    <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs shrink-0">
+                        <p class="text-slate-400">Configuración aplicada a plantillas:</p>
+                        <p class="font-bold text-emerald-400 mt-0.5" x-text="`${currentSocietyObj.badge} · ${effectiveSectorLabel}`"></p>
+                    </div>
+                </div>
+
+                <!-- Grid de Documentos Descargables -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
+                    <template x-for="doc in downloadableTemplates" :key="doc.id">
+                        <div class="bg-slate-950/80 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-5 flex flex-col justify-between transition">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-3">
+                                    <span class="text-2xl" x-text="doc.icon"></span>
+                                    <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" x-text="doc.format"></span>
+                                </div>
+                                <h3 class="text-base font-bold text-white" x-text="doc.title"></h3>
+                                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed" x-text="doc.desc"></p>
+                                <div class="mt-3 flex flex-wrap gap-1.5">
+                                    <template x-for="tag in doc.tags" :key="tag">
+                                        <span class="text-[10px] bg-slate-900 text-slate-300 border border-slate-800 px-2 py-0.5 rounded-md" x-text="tag"></span>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center gap-2">
+                                <button @click="downloadDocument(doc.id)"
+                                        class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs py-2.5 px-3 rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
+                                    <span>📥 Descargar Editable</span>
+                                </button>
+                                <button @click="previewDocId = doc.id"
+                                        class="bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold py-2.5 px-3 rounded-xl transition cursor-pointer"
+                                        title="Vista previa del contenido">
+                                    👁️ Ver
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Modal / Visor de Vista Previa del Documento -->
+                <div x-show="previewDocId" x-cloak class="mt-8 bg-slate-950 border border-emerald-500/40 rounded-2xl p-6">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                        <h4 class="font-bold text-sm text-emerald-400" x-text="`Vista Previa: ${getDocTitle(previewDocId)}`"></h4>
+                        <div class="flex items-center gap-2">
+                            <button @click="downloadDocument(previewDocId)" class="bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer">📥 Descargar .DOC</button>
+                            <button @click="previewDocId = null" class="text-slate-400 hover:text-white text-sm px-2">✕</button>
+                        </div>
+                    </div>
+                    <pre class="text-xs text-slate-300 whitespace-pre-wrap font-mono bg-slate-900 p-4 rounded-xl border border-slate-800 max-h-72 overflow-y-auto" x-text="getPlainDocPreview(previewDocId)"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 3: SIMULADOR DE TARIFAS RUES & NOTARÍA                      -->
+        <!-- =============================================================== -->
+        <div x-show="activeTab === 'simulador'" class="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">🧮 Simulador de Costos de Constitución (2026)</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mb-6">Estima los derechos de matrícula mercantil en Cámara de Comercio, formulario RUES, impuesto de registro departamental y gastos notariales según el tipo de sociedad.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Tipo de Figura Jurídica:</label>
+                    <select x-model="selectedSociety" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        <template x-for="soc in societyTypes" :key="soc.id">
+                            <option :value="soc.id" x-text="soc.name"></option>
+                        </template>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Capital Suscrito o Activos (COP $):</label>
+                    <input type="number" x-model="capitalInput" min="0" step="500000"
+                           class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500"
+                           placeholder="Ej: 10000000">
+                </div>
+            </div>
+
+            <button @click="calculateCost()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition cursor-pointer">
+                Calcular Presupuesto Estimado
+            </button>
+
+            <template x-if="calculatedCost">
+                <div class="mt-6 bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3">
+                    <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Desglose Estimado para <span x-text="currentSocietyObj.name"></span>:</h3>
+                    <div class="flex justify-between text-sm text-slate-300">
+                        <span>Derechos de Matrícula Mercantil (Tabla RUES):</span>
+                        <span class="text-white font-semibold" x-text="`$${calculatedCost.matricula.toLocaleString('es-CO')} COP`"></span>
+                    </div>
+                    <div class="flex justify-between text-sm text-slate-300">
+                        <span>Formulario RUES + Certificado Existencia:</span>
+                        <span class="text-white font-semibold" x-text="`$${calculatedCost.formulario.toLocaleString('es-CO')} COP`"></span>
+                    </div>
+                    <div class="flex justify-between text-sm text-slate-300">
+                        <span x-text="selectedSociety === 'natural' ? 'Impuesto de Registro (Sin cuantía):' : 'Impuesto de Registro Departamental (~0.7%):'"></span>
+                        <span class="text-white font-semibold" x-text="`$${calculatedCost.impuesto.toLocaleString('es-CO')} COP`"></span>
+                    </div>
+                    <div class="flex justify-between text-sm text-slate-300" x-show="calculatedCost.notaria > 0">
+                        <span>Derechos Notariales Escritura Pública (Est.):</span>
+                        <span class="text-amber-400 font-semibold" x-text="`$${calculatedCost.notaria.toLocaleString('es-CO')} COP`"></span>
+                    </div>
+                    <div class="border-t border-slate-800 pt-3 flex justify-between text-base sm:text-lg font-black">
+                        <span class="text-emerald-400">Total Aproximado Inicial:</span>
+                        <span class="text-emerald-400" x-text="`$${calculatedCost.total.toLocaleString('es-CO')} COP`"></span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 pt-1">* Valores referenciales basados en tarifas UVT vigentes en Colombia. El impuesto de registro varía ligeramente según el departamento (entre 0.3% y 0.7%).</p>
+                </div>
+            </template>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 4: TEST DE ELECCIÓN SOCIETARIA (SINCRONIZADO CON FILTRO)    -->
+        <!-- =============================================================== -->
+        <div x-show="activeTab === 'test'" class="max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-2 flex items-center gap-2">⚖️ Test de Elección Societaria</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mb-6">Responde estas 3 preguntas clave y aplicaremos automáticamente la sociedad ideal a tu checklist.</p>
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-200 mb-2.5">1. ¿Cuántas personas conformarán el negocio?</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <button @click="testAnswers.socios = 'uno'; evaluateTest()" :class="testAnswers.socios === 'uno' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">Solo yo (1 persona)</button>
+                        <button @click="testAnswers.socios = 'pocos'; evaluateTest()" :class="testAnswers.socios === 'pocos' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">2 a 25 socios</button>
+                        <button @click="testAnswers.socios = 'muchos'; evaluateTest()" :class="testAnswers.socios === 'muchos' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">Más de 5 accionistas / Inversionistas</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-200 mb-2.5">2. ¿Deseas separar y proteger tu patrimonio personal?</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button @click="testAnswers.responsabilidad = 'limitada'; evaluateTest()" :class="testAnswers.responsabilidad === 'limitada' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">Sí, blindar patrimonio personal</button>
+                        <button @click="testAnswers.responsabilidad = 'ilimitada'; evaluateTest()" :class="testAnswers.responsabilidad === 'ilimitada' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">No es prioridad ahora</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-200 mb-2.5">3. ¿Cómo prefieres constituir la empresa?</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button @click="testAnswers.tramite = 'agil'; evaluateTest()" :class="testAnswers.tramite === 'agil' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">Ágil sin Notaría (Documento privado)</button>
+                        <button @click="testAnswers.tramite = 'tradicional'; evaluateTest()" :class="testAnswers.tramite === 'tradicional' ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400' : 'bg-slate-950 border-slate-800 text-slate-400'" class="p-3 rounded-xl border text-xs font-bold transition cursor-pointer">Formal con Escritura Pública</button>
+                    </div>
+                </div>
+
+                <template x-if="testResult">
+                    <div class="mt-6 bg-emerald-950/40 border border-emerald-500/40 rounded-2xl p-5">
+                        <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block mb-1">Resultado Recomendado:</span>
+                        <h3 class="text-lg font-black text-white" x-text="testResult.tipo"></h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" x-text="testResult.razon"></p>
+                        <button @click="applyTestSociety()" class="mt-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer">
+                            ✓ Aplicar esta Sociedad a mi Ruta Mercantil
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 5: PREGUNTAS FRECUENTES (FAQ CON BUSCADOR)                  -->
+        <!-- =============================================================== -->
+        <div x-show="activeTab === 'faq'" class="max-w-3xl mx-auto space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-white">❓ Preguntas Frecuentes Legales & Tributarias</h2>
+                <input type="text" x-model="faqSearch" placeholder="Buscar tema (ej: RUT, INVIMA, S.A.S.)..."
+                       class="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 sm:w-64">
+            </div>
+
+            <div class="space-y-3">
+                <template x-for="(faq, idx) in filteredFaqs" :key="idx">
+                    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl overflow-hidden">
+                        <button @click="openFaq = openFaq === idx ? null : idx" class="w-full text-left p-4 sm:p-5 font-bold text-sm text-white flex justify-between items-center hover:bg-slate-800/50 transition cursor-pointer">
+                            <span x-text="faq.q"></span>
+                            <span class="text-emerald-400 font-black text-lg ml-3" x-text="openFaq === idx ? '−' : '+'"></span>
+                        </button>
+                        <div x-show="openFaq === idx" class="px-5 pb-5 text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-800/70 pt-3" x-text="faq.a"></div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- CHATBOT FLOTANTE EXTENSIBLE ("RutaBot 2.0")                           -->
+    <!-- ===================================================================== -->
+    <div class="fixed bottom-5 right-5 z-40">
+        <!-- Botón Flotante -->
+        <template x-if="!isChatOpen">
+            <button @click="isChatOpen = true"
+                    class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 px-4 py-3.5 rounded-full shadow-2xl shadow-emerald-500/30 flex items-center gap-2.5 font-extrabold text-sm transition transform hover:scale-105 cursor-pointer">
+                <span class="text-lg">🤖</span>
+                <span>Preguntar a RutaBot</span>
+            </button>
+        </template>
+
+        <!-- Ventana del Asistente -->
+        <template x-if="isChatOpen">
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl w-[92vw] sm:w-[410px] h-[540px] shadow-2xl flex flex-col overflow-hidden">
+                <!-- Header Chat -->
+                <div class="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center">
+                    <div class="flex items-center gap-2.5">
+                        <div class="bg-emerald-500/20 border border-emerald-500/40 p-2 rounded-xl text-emerald-400 font-bold text-base">🤖</div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-white">RutaBot · Consultor Empresarial</h4>
+                            <p class="text-[11px] text-emerald-400">● Activo · Contexto: <span x-text="currentSocietyObj.badge"></span></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button @click="clearChat()" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded-lg hover:bg-slate-800" title="Limpiar conversación">🗑️</button>
+                        <button @click="isChatOpen = false" class="text-slate-400 hover:text-white text-base px-2 py-1 rounded-lg hover:bg-slate-800">✕</button>
+                    </div>
+                </div>
+
+                <!-- Sugerencias Rápidas -->
+                <div class="bg-slate-900/90 px-3 py-2 border-b border-slate-800 flex gap-1.5 overflow-x-auto no-scrollbar">
+                    <button @click="askBot('¿Qué necesito para mi sector actual?')" class="text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700 whitespace-nowrap transition cursor-pointer">📌 Requisitos de mi sector</button>
+                    <button @click="askBot('Diferencia entre S.A.S. y Persona Natural')" class="text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700 whitespace-nowrap transition cursor-pointer">⚖️ S.A.S. vs Natural</button>
+                    <button @click="askBot('¿Cómo funciona el Régimen Simple RST?')" class="text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700 whitespace-nowrap transition cursor-pointer">💰 Régimen Simple</button>
+                    <button @click="askBot('¿Qué es el código CIIU y cómo buscarlo?')" class="text-[11px] bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700 whitespace-nowrap transition cursor-pointer">🔢 Código CIIU</button>
+                </div>
+
+                <!-- Mensajes -->
+                <div id="chatMessagesContainer" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950/60 text-xs">
+                    <template x-for="(m, i) in chatMessages" :key="i">
+                        <div :class="m.sender === 'user' ? 'flex justify-end' : 'flex justify-start'">
+                            <div :class="m.sender === 'user' 
+                                    ? 'bg-emerald-500 text-slate-950 font-semibold rounded-2xl rounded-br-sm' 
+                                    : 'bg-slate-900 text-slate-200 border border-slate-800 rounded-2xl rounded-bl-sm'"
+                                 class="max-w-[85%] p-3.5 leading-relaxed whitespace-pre-line shadow" x-text="m.text">
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Input Pregunta Libre -->
+                <form @submit.prevent="submitChatInput()" class="p-3 border-t border-slate-800 bg-slate-950 flex gap-2">
+                    <input type="text" x-model="chatInput" placeholder="Pregunta cualquier duda empresarial..."
+                           class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                    <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-4 py-2.5 rounded-xl font-extrabold text-xs transition cursor-pointer">
+                        Enviar
+                    </button>
+                </form>
+            </div>
+        </template>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <p>© 2026 <strong class="text-slate-300">RutaEmpresa Col</strong> · Herramienta educativa y de orientación mercantil para emprendedores en Colombia.</p>
+            <div class="flex flex-wrap items-center gap-4">
+                <a href="https://www.rues.org.co/" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">RUES</a>
+                <a href="https://www.dian.gov.co/" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">DIAN</a>
+                <a href="https://www.vue.gov.co/" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">VUE Colombia</a>
+                <a href="https://www.sic.gov.co/" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">SIC</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- LÓGICA DE APLICACIÓN, PLANTILLAS EDITABLES Y BASE DE CONOCIMIENTO     -->
+    <!-- ===================================================================== -->
+    <script>
+        function appData() {
+            return {
+                // Navegación y Estado Visual
+                view: 'home', // 'home' | 'app'
+                activeTab: 'ruta', // 'ruta' | 'descargables' | 'simulador' | 'test' | 'faq'
+                isTransitioning: false,
+                transitionText: 'Preparando tu ruta legal...',
+                previewDocId: null,
+                toast: { visible: false, title: '', message: '' },
+
+                // Filtros Principales
+                selectedSociety: 'sas',
+                selectedSector: 'gastronomia',
+                customSectorName: '',
+
+                // Seguimiento persistente (Checklist por combinación sociedad_sector)
+                checkedSubReqs: {}, // { 'sas_gastronomia_1_0': true }
+                forcedMainSteps: {}, // { 'sas_gastronomia_1': true }
+
+                // Simulador y Test
+                capitalInput: 10000000,
+                calculatedCost: null,
+                testAnswers: { socios: null, responsabilidad: null, tramite: null },
+                testResult: null,
+                openFaq: 0,
+                faqSearch: '',
+
+                // Chatbot RutaBot
+                isChatOpen: false,
+                chatInput: '',
+                chatMessages: [
+                    { sender: 'bot', text: '¡Hola! Soy RutaBot 🤖.\nPuedes preguntarme cualquier duda sobre constitución de empresas en Colombia: tipos de sociedad, códigos CIIU, DIAN, RUT, Régimen Simple, INVIMA, costos de Cámara de Comercio, facturación electrónica o contratos.' }
+                ],
+
+                // ---------------------------------------------------------------
+                // 1. TIPOS DE SOCIEDAD (FILTRO JURÍDICO)
+                // ---------------------------------------------------------------
+                societyTypes: [
+                    {
+                        id: 'sas',
+                        badge: 'S.A.S.',
+                        name: 'Sociedad por Acciones Simplificada',
+                        summary: 'La más usada en Colombia (Ley 1258). Flexible, 1 o más accionistas, responsabilidad limitada al capital.',
+                        partners: '1 o más accionistas',
+                        docType: 'Documento Privado'
+                    },
+                    {
+                        id: 'natural',
+                        badge: 'P. Natural',
+                        name: 'Persona Natural Comerciante',
+                        summary: 'Ideal para iniciar rápido y con bajo costo. Operas a título personal con tu número de cédula.',
+                        partners: '1 titular',
+                        docType: 'Sin Estatutos'
+                    },
+                    {
+                        id: 'ltda',
+                        badge: 'Ltda.',
+                        name: 'Sociedad de Responsabilidad Limitada',
+                        summary: 'Sociedad tradicional entre socios de confianza. Capital dividido en cuotas de igual valor.',
+                        partners: '2 a 25 socios',
+                        docType: 'Escritura Pública'
+                    },
+                    {
+                        id: 'sa',
+                        badge: 'S.A.',
+                        name: 'Sociedad Anónima',
+                        summary: 'Pensada para medianas y grandes empresas que buscan captar inversión o emitir acciones.',
+                        partners: 'Mínimo 5 accionistas',
+                        docType: 'Escritura Pública'
+                    }
+                ],
+
+                // ---------------------------------------------------------------
+                // 2. SECTORES ECONÓMICOS AMPLIOS + OPCIÓN "OTROS"
+                // ---------------------------------------------------------------
+                sectors: [
+                    { id: 'gastronomia', label: 'Gastronomía & Alimentos', icon: '🍲', desc: 'Restaurantes, cafeterías, dark kitchens, repostería y bebidas.' },
+                    { id: 'tecnologia', label: 'Tecnología & Software', icon: '💻', desc: 'Desarrollo SaaS, apps, agencias digitales, IA y e-commerce.' },
+                    { id: 'salud', label: 'Salud, Estética & Belleza', icon: '🌿', desc: 'Consultorios, spas, barberías, cosméticos e insumos médicos.' },
+                    { id: 'comercio', label: 'Comercio Retail & Tiendas', icon: '🛍️', desc: 'Moda, calzado, ferreterías, minimercados y distribución.' },
+                    { id: 'manufactura', label: 'Manufactura & Industria', icon: '🏭', desc: 'Talleres de confección, carpintería, metalmecánica y producción.' },
+                    { id: 'construccion', label: 'Construcción & Inmobiliaria', icon: '🏗️', desc: 'Obras civiles, arquitectura, remodelaciones y finca raíz.' },
+                    { id: 'transporte', label: 'Transporte & Logística', icon: '🚚', desc: 'Carga, mensajería urbana, mudanzas y operadores logísticos.' },
+                    { id: 'turismo', label: 'Turismo & Hotelería', icon: '✈️', desc: 'Agencias de viajes, hoteles, glamping y operadores turísticos.' },
+                    { id: 'educacion', label: 'Educación & Consultoría', icon: '🎓', desc: 'Academias, cursos, asesoría contable, jurídica y empresarial.' },
+                    { id: 'agro', label: 'Agroindustria & Campo', icon: '🌱', desc: 'Cultivos, ganadería, café, insumos agrícolas y comercialización.' },
+                    { id: 'otros', label: 'Otros Sectores / Actividad General', icon: '✨', desc: 'Cualquier otra actividad económica, servicios o emprendimiento.' }
+                ],
+
+                // ---------------------------------------------------------------
+                // 3. PLANTILLAS EDITABLES DESCARGABLES (.DOC)
+                // ---------------------------------------------------------------
+                downloadableTemplates: [
+                    {
+                        id: 'estatutos_sas',
+                        icon: '📜',
+                        format: 'Word (.DOC)',
+                        title: 'Minuta de Estatutos S.A.S. (Ley 1258)',
+                        desc: 'Modelo completo de documento privado de constitución para Sociedad por Acciones Simplificada, listo para editar y firmar.',
+                        tags: ['S.A.S.', 'Cámara de Comercio', 'Editable']
+                    },
+                    {
+                        id: 'acta_constitucion',
+                        icon: '✍️',
+                        format: 'Word (.DOC)',
+                        title: 'Acta de Constitución y Nombramientos',
+                        desc: 'Acta de asamblea constitutiva con aceptación de cargos de Representante Legal principal y suplente.',
+                        tags: ['Sociedades', 'Representación Legal']
+                    },
+                    {
+                        id: 'carta_banco',
+                        icon: '🏦',
+                        format: 'Word (.DOC)',
+                        title: 'Carta de Apertura de Cuenta Bancaria',
+                        desc: 'Solicitud formal dirigida a entidades financieras para apertura de cuenta corriente o de ahorros empresarial.',
+                        tags: ['Bancos', 'Pre-RUT / RUT']
+                    },
+                    {
+                        id: 'contrato_servicios',
+                        icon: '🤝',
+                        format: 'Word (.DOC)',
+                        title: 'Contrato de Prestación de Servicios',
+                        desc: 'Plantilla base comercial y operativa para contratar proveedores, freelancers o aliados en Colombia.',
+                        tags: ['Operación', 'Contratación']
+                    },
+                    {
+                        id: 'checklist_personalizado',
+                        icon: '✅',
+                        format: 'Word (.DOC)',
+                        title: 'Mi Hoja de Ruta y Checklist Actual',
+                        desc: 'Exporta todos los pasos, enlaces oficiales y tu porcentaje de progreso actual según la sociedad y sector elegidos.',
+                        tags: ['Personalizado', 'Seguimiento']
+                    }
+                ],
+
+                // ---------------------------------------------------------------
+                // 4. PREGUNTAS FRECUENTES (FAQ)
+                // ---------------------------------------------------------------
+                faqs: [
+                    {
+                        q: '¿Cuál es la diferencia principal entre Persona Natural y S.A.S.?',
+                        a: 'Como Persona Natural respondes con todo tu patrimonio personal (casa, cuentas, vehículos) ante deudas o demandas del negocio. En una S.A.S. se crea una persona jurídica independiente y tu responsabilidad se limita únicamente al monto del capital que aportaste.'
+                    },
+                    {
+                        q: '¿Necesito ir a una Notaría para crear una S.A.S.?',
+                        a: 'No. Por regla general (Ley 1258 de 2008), la S.A.S. se constituye mediante Documento Privado autenticado en Cámara de Comercio o con firma digital. Solo requiere Escritura Pública si se aportan bienes inmuebles (casas, lotes) como capital.'
+                    },
+                    {
+                        q: '¿Cuánto tiempo tarda constituir una empresa en Colombia?',
+                        a: 'Si tienes los estatutos y documentos listos, el trámite en Cámara de Comercio y la asignación del NIT por parte de la DIAN suele tardar entre 1 y 4 días hábiles (incluso 24 horas en ciudades conectadas a la Ventanilla Única Empresarial - VUE).'
+                    },
+                    {
+                        q: '¿Qué es el Régimen Simple de Tributación (RST) y me conviene?',
+                        a: 'Es un modelo opcional de la DIAN que unifica en un solo pago bimestral/anual el impuesto de renta, ICA (Industria y Comercio) y avisos y tableros, con tarifas bajas sobre ingresos brutos. Es muy atractivo para comercios, servicios, gastronomía y tecnología en crecimiento.'
+                    },
+                    {
+                        q: '¿Cuándo estoy obligado a emitir Factura Electrónica?',
+                        a: 'Todas las sociedades comerciales (S.A.S., Ltda., S.A.) y los responsables de IVA o Impoconsumo están obligados a habilitarse y emitir factura electrónica desde el inicio de sus operaciones comerciales ante la DIAN.'
+                    },
+                    {
+                        q: '¿Qué pasa si mi actividad no aparece en los 10 sectores principales?',
+                        a: 'Puedes seleccionar la tarjeta "Otros Sectores / Actividad General", escribir el nombre exacto de tu negocio y el sistema te entregará la ruta mercantil completa más la guía para ubicar tu código CIIU exacto.'
+                    }
+                ],
+
+                // ---------------------------------------------------------------
+                // INICIALIZACIÓN Y PERSISTENCIA
+                // ---------------------------------------------------------------
+                initApp() {
+                    try {
+                        const saved = localStorage.getItem('rutaEmpresaCol_2026_v1');
+                        if (saved) {
+                            const data = JSON.parse(saved);
+                            if (data.selectedSociety) this.selectedSociety = data.selectedSociety;
+                            if (data.selectedSector) this.selectedSector = data.selectedSector;
+                            if (data.customSectorName) this.customSectorName = data.customSectorName;
+                            if (data.checkedSubReqs) this.checkedSubReqs = data.checkedSubReqs;
+                            if (data.forcedMainSteps) this.forcedMainSteps = data.forcedMainSteps;
+                        }
+                    } catch (e) {
+                        console.warn('No se pudo leer localStorage:', e);
+                    }
+                },
+
+                saveProgress() {
+                    try {
+                        localStorage.setItem('rutaEmpresaCol_2026_v1', JSON.stringify({
+                            selectedSociety: this.selectedSociety,
+                            selectedSector: this.selectedSector,
+                            customSectorName: this.customSectorName,
+                            checkedSubReqs: this.checkedSubReqs,
+                            forcedMainSteps: this.forcedMainSteps
+                        }));
+                    } catch (e) {
+                        console.warn('No se pudo guardar en localStorage:', e);
+                    }
+                },
+
+                // ---------------------------------------------------------------
+                // NAVEGACIÓN CON TRANSICIÓN ANIMADA
+                // ---------------------------------------------------------------
+                startWithAnimation(targetTab = 'ruta') {
+                    this.transitionText = targetTab === 'descargables'
+                        ? 'Preparando tus plantillas editables...'
+                        : 'Construyendo tu ruta empresarial...';
+                    this.isTransitioning = true;
+
+                    setTimeout(() => {
+                        this.view = 'app';
+                        this.activeTab = targetTab;
+                        this.isTransitioning = false;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 1500);
+                },
+
+                enterApp(tab) {
+                    this.view = 'app';
+                    this.activeTab = tab;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                goToHome() {
+                    this.view = 'home';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                showToast(title, message) {
+                    this.toast = { visible: true, title, message };
+                    setTimeout(() => {
+                        this.toast.visible = false;
+                    }, 3800);
+                },
+
+                // ---------------------------------------------------------------
+                // PROPIEDADES COMPUTADAS DE SOCIEDAD Y SECTOR
+                // ---------------------------------------------------------------
+                get currentSocietyObj() {
+                    return this.societyTypes.find(s => s.id === this.selectedSociety) || this.societyTypes[0];
+                },
+
+                get effectiveSectorLabel() {
+                    if (this.selectedSector === 'otros') {
+                        return this.customSectorName.trim() ? `Otros: ${this.customSectorName.trim()}` : 'Otros Sectores / Actividad General';
+                    }
+                    const found = this.sectors.find(s => s.id === this.selectedSector);
+                    return found ? found.label : 'General';
+                },
+
+                selectSociety(socId) {
+                    this.selectedSociety = socId;
+                    this.saveProgress();
+                },
+
+                selectSector(secId) {
+                    this.selectedSector = secId;
+                    this.saveProgress();
+                },
+
+                // ---------------------------------------------------------------
+                // GENERACIÓN DINÁMICA DE PASOS SEGÚN SOCIEDAD Y SECTOR
+                // ---------------------------------------------------------------
+                get currentSteps() {
+                    const steps = [];
+
+                    // PASO 1: HOMONIMIA Y CIIU (Común a todos)
+                    steps.push({
+                        id: 1,
+                        title: '01. Consulta de Nombre (Homonimia) y Código CIIU',
+                        desc: 'Verifica que el nombre comercial o razón social no esté registrado a nivel nacional y define tu código de actividad económica CIIU (4 dígitos).',
+                        entity: 'RUES / Cámara de Comercio',
+                        duration: '15 minutos (En línea)',
+                        reqs: [
+                            'Definir 3 opciones de nombre o razón social',
+                            'Consultar disponibilidad en el portal RUES',
+                            'Seleccionar código CIIU principal y secundarios',
+                            'Verificar marca en la SIC (opcional recomendado)'
+                        ],
+                        links: [
+                            { label: 'Consultar Homonimia en RUES', url: 'https://www.rues.org.co/' },
+                            { label: 'Buscador de Marcas SIC', url: 'https://www.sic.gov.co/' }
+                        ],
+                        attachments: []
+                    });
+
+                    // PASO 2: DOCUMENTO DE CONSTITUCIÓN (Varía según Tipo de Sociedad)
+                    if (this.selectedSociety === 'natural') {
+                        steps.push({
+                            id: 2,
+                            title: '02. Definición de Establecimiento y Capital (Persona Natural)',
+                            desc: 'Como Persona Natural no necesitas redacción de estatutos ni notaría. Solo defines el nombre de tu establecimiento de comercio y el valor de tus activos vinculados.',
+                            entity: 'Titular / Comerciante',
+                            duration: '30 minutos',
+                            reqs: [
+                                'Cédula de ciudadanía o extranjería vigente',
+                                'Dirección comercial y correo electrónico de notificaciones',
+                                'Definir valor de activos destinados al negocio'
+                            ],
+                            links: [
+                                { label: 'Ventanilla Única Empresarial (VUE)', url: 'https://www.vue.gov.co/' }
+                            ],
+                            attachments: []
+                        });
+                    } else if (this.selectedSociety === 'sas') {
+                        steps.push({
+                            id: 2,
+                            title: '02. Redacción de Estatutos S.A.S. (Documento Privado)',
+                            desc: 'Elabora los estatutos sociales indicando objeto social, capital autorizado, suscrito y pagado, y nombramiento de representante legal (Ley 1258 de 2008).',
+                            entity: 'Documento Privado / Cámara de Comercio',
+                            duration: '1 a 2 horas',
+                            reqs: [
+                                'Minuta de Estatutos S.A.S. diligenciada',
+                                'Acta de constitución y aceptación de cargos',
+                                'Copia de cédulas de accionistas y representante legal',
+                                'Autenticación de firmas (presencial en Cámara o firma digital)'
+                            ],
+                            links: [
+                                { label: 'Constitución en línea VUE', url: 'https://www.vue.gov.co/' }
+                            ],
+                            attachments: [
+                                { docId: 'estatutos_sas', label: 'Descargar Minuta S.A.S. (.DOC)' },
+                                { docId: 'acta_constitucion', label: 'Descargar Acta (.DOC)' }
+                            ]
+                        });
+                    } else if (this.selectedSociety === 'ltda') {
+                        steps.push({
+                            id: 2,
+                            title: '02. Minuta y Escritura Pública de Constitución (Ltda.)',
+                            desc: 'La Sociedad Limitada (2 a 25 socios) exige elevar los estatutos a Escritura Pública ante Notaría y pagar el capital social íntegramente al momento de constituirse.',
+                            entity: 'Notaría Pública',
+                            duration: '1 a 2 días hábiles',
+                            reqs: [
+                                'Minuta de constitución Sociedad Limitada',
+                                'Pago total de las cuotas sociales al constituir',
+                                'Otorgamiento de Escritura Pública en Notaría',
+                                'Copias autenticadas para registro mercantil'
+                            ],
+                            links: [
+                                { label: 'Portal RUES Colombia', url: 'https://www.rues.org.co/' }
+                            ],
+                            attachments: [
+                                { docId: 'acta_constitucion', label: 'Descargar Acta Base (.DOC)' }
+                            ]
+                        });
+                    } else if (this.selectedSociety === 'sa') {
+                        steps.push({
+                            id: 2,
+                            title: '02. Escritura Pública y Junta Directiva (Sociedad Anónima S.A.)',
+                            desc: 'Requiere mínimo 5 accionistas, suscribir al menos el 50% del capital autorizado, pagar mínimo 1/3 del suscrito, nombrar Junta Directiva y Revisor Fiscal, y elevarse a Escritura Pública.',
+                            entity: 'Notaría Pública',
+                            duration: '2 a 3 días hábiles',
+                            reqs: [
+                                'Mínimo 5 accionistas identificados',
+                                'Escritura Pública de constitución ante Notaría',
+                                'Nombramiento de Junta Directiva (3 principales y 3 suplentes)',
+                                'Designación de Revisor Fiscal (Contador Público)'
+                            ],
+                            links: [
+                                { label: 'Portal RUES Colombia', url: 'https://www.rues.org.co/' }
+                            ],
+                            attachments: [
+                                { docId: 'acta_constitucion', label: 'Descargar Acta Base (.DOC)' }
+                            ]
+                        });
+                    }
+
+                    // PASO 3: PRE-RUT ANTE LA DIAN
+                    steps.push({
+                        id: 3,
+                        title: '03. Trámite del Pre-RUT ante la DIAN',
+                        desc: this.selectedSociety === 'natural'
+                            ? 'Inscribe o actualiza tu RUT personal agregando la responsabilidad de comerciante y tus códigos CIIU.'
+                            : 'Solicita el Pre-RUT de la nueva sociedad en el portal Muisca de la DIAN para presentarlo junto con los estatutos en Cámara de Comercio.',
+                        entity: 'DIAN (Dirección de Impuestos y Aduanas Nacionales)',
+                        duration: '1 hora (Virtual)',
+                        reqs: [
+                            'Formulario 001 Pre-RUT diligenciado en línea',
+                            'Cédula del representante legal / titular',
+                            'Definir responsabilidades tributarias (IVA, Renta o Régimen Simple RST)'
+                        ],
+                        links: [
+                            { label: 'Portal Transaccional DIAN Muisca', url: 'https://muisca.dian.gov.co/' },
+                            { label: 'Sitio Oficial DIAN', url: 'https://www.dian.gov.co/' }
+                        ],
+                        attachments: []
+                    });
+
+                    // PASO 4: MATRÍCULA MERCANTIL Y RUES
+                    steps.push({
+                        id: 4,
+                        title: '04. Radicación y Pago de Matrícula Mercantil',
+                        desc: 'Radica los documentos en la Cámara de Comercio de tu jurisdicción (o vía VUE), paga los derechos de matrícula e impuesto de registro y obtén el NIT.',
+                        entity: 'Cámara de Comercio',
+                        duration: '1 a 3 días hábiles',
+                        reqs: [
+                            'Formulario RUES debidamente firmado',
+                            this.selectedSociety === 'natural' ? 'Copia de cédula del comerciante' : 'Estatutos / Escritura Pública + Pre-RUT',
+                            'Pago de derechos de matrícula e impuesto de registro',
+                            'Descarga del Certificado de Existencia y Representación Legal'
+                        ],
+                        links: [
+                            { label: 'Ventanilla Única Empresarial (VUE)', url: 'https://www.vue.gov.co/' },
+                            { label: 'RUES - Certificados', url: 'https://www.rues.org.co/' }
+                        ],
+                        attachments: []
+                    });
+
+                    // PASO 5: REQUISITOS ESPECÍFICOS SEGÚN SECTOR ECONÓMICO
+                    const sectorConfig = {
+                        gastronomia: {
+                            title: '05. Permisos Sanitarios y Funcionamiento (Gastronomía & Alimentos)',
+                            desc: 'Cumplimiento obligatorio de normas higiénico-sanitarias para preparación, manipulación y venta de alimentos o bebidas.',
+                            entity: 'Secretaría de Salud / INVIMA / Alcaldía',
+                            duration: '5 a 15 días hábiles',
+                            reqs: [
+                                'Concepto Sanitario Favorable (Secretaría de Salud municipal)',
+                                'Certificados de manipulación de alimentos del personal',
+                                'Certificado de seguridad y prevención de incendios (Bomberos)',
+                                'Concepto de Uso de Suelo y pago Sayco & Acinpro (si hay música)',
+                                'Registro sanitario INVIMA (si empacas o comercializas productos procesados)'
+                            ],
+                            links: [
+                                { label: 'Portal Oficial INVIMA', url: 'https://www.invima.gov.co/' }
+                            ]
+                        },
+                        tecnologia: {
+                            title: '05. Protección de Datos y Comercio Digital (Tecnología & Software)',
+                            desc: 'Cumplimiento normativo para plataformas digitales, desarrollo de software, manejo de datos personales y comercio electrónico.',
+                            entity: 'SIC / MinTIC',
+                            duration: '2 a 5 días hábiles',
+                            reqs: [
+                                'Política de Tratamiento de Datos Personales (Ley 1581 de 2012)',
+                                'Registro Nacional de Bases de Datos - RNBD ante la SIC (si aplica por activos)',
+                                'Términos y condiciones web + Derecho de retracto (Ley 1480)',
+                                'Contratos de cesión de propiedad intelectual / derechos de autor con desarrolladores'
+                            ],
+                            links: [
+                                { label: 'Superintendencia de Industria y Comercio (SIC)', url: 'https://www.sic.gov.co/' }
+                            ]
+                        },
+                        salud: {
+                            title: '05. Habilitación Sanitaria y Registros (Salud, Estética & Belleza)',
+                            desc: 'Requisitos de bioseguridad, habilitación de servicios de salud o notificación sanitaria obligatoria para cosméticos.',
+                            entity: 'Secretaría de Salud / INVIMA',
+                            duration: '10 a 20 días hábiles',
+                            reqs: [
+                                'Concepto técnico-sanitario de bioseguridad y manejo de residuos (PGIRASA)',
+                                'Inscripción en el REPS (si prestas servicios médicos o clínicos)',
+                                'Notificación Sanitaria Obligatoria INVIMA (si fabricas o importas cosméticos)',
+                                'Certificado de Uso de Suelo y Bomberos'
+                            ],
+                            links: [
+                                { label: 'Portal Oficial INVIMA', url: 'https://www.invima.gov.co/' }
+                            ]
+                        },
+                        comercio: {
+                            title: '05. Apertura de Establecimiento y Protección al Consumidor (Retail)',
+                            desc: 'Requisitos municipales para locales comerciales abiertos al público y cumplimiento del Estatuto del Consumidor.',
+                            entity: 'Alcaldía / Bomberos / SIC',
+                            duration: '3 a 7 días hábiles',
+                            reqs: [
+                                'Concepto de Uso de Suelo compatible con comercio',
+                                'Inspección y certificado de seguridad de Bomberos',
+                                'Aviso de apertura ante Policía / Secretaría de Gobierno (Ley 1801)',
+                                'Política visible de cambios, garantías y precios en pesos colombianos'
+                            ],
+                            links: [
+                                { label: 'Superintendencia de Industria y Comercio (SIC)', url: 'https://www.sic.gov.co/' }
+                            ]
+                        },
+                        manufactura: {
+                            title: '05. Permisos Industriales, Ambientales y SST (Manufactura)',
+                            desc: 'Normativa para talleres, plantas de producción, manejo de residuos industriales y seguridad laboral.',
+                            entity: 'Autoridad Ambiental / Bomberos / MinTrabajo',
+                            duration: '10 a 20 días hábiles',
+                            reqs: [
+                                'Concepto de Uso de Suelo industrial o mixto',
+                                'Certificado de Bomberos y plan de emergencias',
+                                'Permisos ambientales de emisiones o vertimientos (si aplica)',
+                                'Diseño del Sistema de Gestión de Seguridad y Salud en el Trabajo (SG-SST)'
+                            ],
+                            links: [
+                                { label: 'Ministerio del Trabajo', url: 'https://www.mintrabajo.gov.co/' }
+                            ]
+                        },
+                        construccion: {
+                            title: '05. Licencias, Matrícula Inmobiliaria y SST (Construcción)',
+                            desc: 'Requisitos para constructoras, firmas de ingeniería/arquitectura y empresas de arrendamiento o corretaje.',
+                            entity: 'Curaduría Urbana / Alcaldía / COPNIA',
+                            duration: '10 a 30 días hábiles',
+                            reqs: [
+                                'Matrícula de Arrendador ante Alcaldía (si administras más de 5 inmuebles)',
+                                'Tarjetas profesionales vigentes (COPNIA / CPNAA) de directores de obra',
+                                'Licencias urbanísticas o de construcción en Curaduría (según proyecto)',
+                                'Protocolos estrictos de trabajo en alturas y afiliación ARL riesgo V'
+                            ],
+                            links: [
+                                { label: 'Ministerio del Trabajo', url: 'https://www.mintrabajo.gov.co/' }
+                            ]
+                        },
+                        transporte: {
+                            title: '05. Habilitación de Transporte y RUNT (Transporte & Logística)',
+                            desc: 'Regulación para transporte de carga, pasajeros, operadores logísticos y flotas vehiculares.',
+                            entity: 'Ministerio de Transporte / RUNT',
+                            duration: '15 a 30 días hábiles',
+                            reqs: [
+                                'Inscripción de la empresa en el Registro Único Nacional de Tránsito (RUNT)',
+                                'Habilitación ante el Ministerio de Transporte (si es servicio público de carga/pasajeros)',
+                                'Plan Estratégico de Seguridad Vial (PESV) si cuentas con flota propia/contratada',
+                                'Pólizas de responsabilidad civil contractual y extracontractual'
+                            ],
+                            links: [
+                                { label: 'Portal RUNT Colombia', url: 'https://www.runt.gov.co/' }
+                            ]
+                        },
+                        turismo: {
+                            title: '05. Registro Nacional de Turismo - RNT (Turismo & Hotelería)',
+                            desc: 'Inscripción obligatoria antes de iniciar operaciones para hoteles, alojamientos, agencias de viajes y guías.',
+                            entity: 'Confecámaras / MinCIT',
+                            duration: '2 a 5 días hábiles',
+                            reqs: [
+                                'Inscripción en el Registro Nacional de Turismo (RNT) antes de operar',
+                                'Concepto de Uso de Suelo turístico o comercial',
+                                'Certificado de Bomberos y concepto sanitario',
+                                'Cumplimiento de normas de sostenibilidad turística (NTS)'
+                            ],
+                            links: [
+                                { label: 'Registro Nacional de Turismo (RNT)', url: 'https://rnt.confecamaras.co/' }
+                            ]
+                        },
+                        educacion: {
+                            title: '05. Lineamientos Académicos y Propiedad Intelectual (Educación)',
+                            desc: 'Diferenciación entre educación informal (cursos libres) y educación para el trabajo, más protección de contenidos.',
+                            entity: 'Secretaría de Educación / DNDA',
+                            duration: '3 a 15 días hábiles',
+                            reqs: [
+                                'Definir si es educación informal (cursos menores a 160 horas, sin licencia) o formal',
+                                'Licencia de funcionamiento en Secretaría de Educación (si otorga certificados de aptitud)',
+                                'Registro de material didáctico y cursos en Dirección Nacional de Derecho de Autor',
+                                'Contratos de prestación de servicios docentes'
+                            ],
+                            links: [
+                                { label: 'Dirección Nacional de Derecho de Autor', url: 'http://derechodeautor.gov.co/' }
+                            ]
+                        },
+                        agro: {
+                            title: '05. Registros ICA, Ambientales y Comercialización (Agroindustria)',
+                            desc: 'Requisitos sanitarios agropecuarios, trazabilidad de predios y permisos de aprovechamiento.',
+                            entity: 'ICA / INVIMA / Corporación Autónoma',
+                            duration: '10 a 20 días hábiles',
+                            reqs: [
+                                'Registro de predio pecuario o agrícola ante el ICA',
+                                'Certificación en Buenas Prácticas Agrícolas (BPA) o Ganaderas (BPG)',
+                                'Concesión de aguas o permisos ambientales ante la CAR regional (si aplica)',
+                                'Registro INVIMA si se transforman alimentos para consumo humano'
+                            ],
+                            links: [
+                                { label: 'Instituto Colombiano Agropecuario (ICA)', url: 'https://www.ica.gov.co/' }
+                            ]
+                        },
+                        otros: {
+                            title: `05. Permisos Municipales y Sectoriales (${this.effectiveSectorLabel})`,
+                            desc: 'Verificación de requisitos generales de funcionamiento comercial, uso de suelo y contratación para tu actividad específica.',
+                            entity: 'Alcaldía Municipal / Bomberos / MinTrabajo',
+                            duration: '3 a 7 días hábiles',
+                            reqs: [
+                                'Verificar compatibilidad de Uso de Suelo en Planeación Municipal',
+                                'Certificado de seguridad humana y contra incendios (Bomberos)',
+                                'Inscripción en el Registro de Información Tributaria (RIT - Impuesto ICA)',
+                                'Validar si tu actividad tiene superintendencia o entidad vigilante especial'
+                            ],
+                            links: [
+                                { label: 'Ventanilla Única Empresarial (VUE)', url: 'https://www.vue.gov.co/' }
+                            ]
+                        }
+                    };
+
+                    const chosenSec = sectorConfig[this.selectedSector] || sectorConfig.otros;
+                    steps.push({
+                        id: 5,
+                        title: chosenSec.title,
+                        desc: chosenSec.desc,
+                        entity: chosenSec.entity,
+                        duration: chosenSec.duration,
+                        reqs: chosenSec.reqs,
+                        links: chosenSec.links,
+                        attachments: [
+                            { docId: 'contrato_servicios', label: 'Descargar Contrato Base (.DOC)' }
+                        ]
+                    });
+
+                    // PASO 6: CUENTA BANCARIA, RUT DEFINITIVO Y FACTURACIÓN ELECTRÓNICA
+                    steps.push({
+                        id: 6,
+                        title: '06. Cuenta Bancaria Empresarial, RUT Definitivo y Facturación',
+                        desc: 'Abre la cuenta bancaria a nombre del negocio, formaliza el RUT definitivo con el certificado bancario y habilita la facturación electrónica.',
+                        entity: 'Entidad Bancaria y DIAN',
+                        duration: '1 a 3 días hábiles',
+                        reqs: [
+                            'Apertura de cuenta corriente o ahorros empresarial',
+                            'Formalización del RUT definitivo en la DIAN (cargar certificación bancaria)',
+                            'Solicitud de resolución de numeración de facturación electrónica',
+                            'Habilitación en el portal de Facturación Gratuita DIAN o proveedor tecnológico'
+                        ],
+                        links: [
+                            { label: 'Facturación Electrónica DIAN', url: 'https://www.dian.gov.co/' },
+                            { label: 'Portal Muisca DIAN', url: 'https://muisca.dian.gov.co/' }
+                        ],
+                        attachments: [
+                            { docId: 'carta_banco', label: 'Descargar Carta Banco (.DOC)' }
+                        ]
+                    });
+
+                    return steps;
+                },
+
+                // ---------------------------------------------------------------
+                // LÓGICA DEL CHECKLIST MULTINIVEL Y PROGRESO
+                // ---------------------------------------------------------------
+                getKeyPrefix() {
+                    return `${this.selectedSociety}_${this.selectedSector}`;
+                },
+
+                isSubReqChecked(stepId, reqIdx) {
+                    const key = `${this.getKeyPrefix()}_${stepId}_${reqIdx}`;
+                    return !!this.checkedSubReqs[key];
+                },
+
+                toggleSubReq(step, reqIdx) {
+                    const key = `${this.getKeyPrefix()}_${step.id}_${reqIdx}`;
+                    if (this.checkedSubReqs[key]) {
+                        delete this.checkedSubReqs[key];
+                        delete this.forcedMainSteps[`${this.getKeyPrefix()}_${step.id}`];
+                    } else {
+                        this.checkedSubReqs[key] = true;
+                    }
+                    // Forzar reactividad en Alpine
+                    this.checkedSubReqs = { ...this.checkedSubReqs };
+                    this.saveProgress();
+                },
+
+                getStepCheckedCount(step) {
+                    let count = 0;
+                    step.reqs.forEach((_, idx) => {
+                        if (this.isSubReqChecked(step.id, idx)) count++;
+                    });
+                    return count;
+                },
+
+                isStepCompleted(step) {
+                    const mKey = `${this.getKeyPrefix()}_${step.id}`;
+                    if (this.forcedMainSteps[mKey]) return true;
+                    return step.reqs.length > 0 && this.getStepCheckedCount(step) === step.reqs.length;
+                },
+
+                isStepInProgress(step) {
+                    const count = this.getStepCheckedCount(step);
+                    return count > 0 && count < step.reqs.length;
+                },
+
+                toggleMainStep(step) {
+                    const mKey = `${this.getKeyPrefix()}_${step.id}`;
+                    const currentlyDone = this.isStepCompleted(step);
+
+                    if (currentlyDone) {
+                        // Desmarcar paso y todos sus sub-requisitos
+                        delete this.forcedMainSteps[mKey];
+                        step.reqs.forEach((_, idx) => {
+                            delete this.checkedSubReqs[`${this.getKeyPrefix()}_${step.id}_${idx}`];
+                        });
+                    } else {
+                        // Marcar paso y todos sus sub-requisitos
+                        this.forcedMainSteps[mKey] = true;
+                        step.reqs.forEach((_, idx) => {
+                            this.checkedSubReqs[`${this.getKeyPrefix()}_${step.id}_${idx}`] = true;
+                        });
+                    }
+                    this.checkedSubReqs = { ...this.checkedSubReqs };
+                    this.forcedMainSteps = { ...this.forcedMainSteps };
+                    this.saveProgress();
+                },
+
+                get completedMainStepsCount() {
+                    return this.currentSteps.filter(s => this.isStepCompleted(s)).length;
+                },
+
+                get totalSubReqsCount() {
+                    return this.currentSteps.reduce((acc, s) => acc + s.reqs.length, 0);
+                },
+
+                get completedSubReqsCount() {
+                    return this.currentSteps.reduce((acc, s) => acc + this.getStepCheckedCount(s), 0);
+                },
+
+                get progressPercentage() {
+                    if (this.totalSubReqsCount === 0) return 0;
+                    return Math.round((this.completedSubReqsCount / this.totalSubReqsCount) * 100);
+                },
+
+                resetProgress() {
+                    const prefix = this.getKeyPrefix();
+                    Object.keys(this.checkedSubReqs).forEach(k => {
+                        if (k.startsWith(prefix)) delete this.checkedSubReqs[k];
+                    });
+                    Object.keys(this.forcedMainSteps).forEach(k => {
+                        if (k.startsWith(prefix)) delete this.forcedMainSteps[k];
+                    });
+                    this.checkedSubReqs = { ...this.checkedSubReqs };
+                    this.forcedMainSteps = { ...this.forcedMainSteps };
+                    this.saveProgress();
+                    this.showToast('Progreso reiniciado', 'Se limpiaron las marcas de la ruta seleccionada.');
+                },
+
+                // ---------------------------------------------------------------
+                // GENERACIÓN DE DOCUMENTOS EDITABLES (.DOC PARA WORD)
+                // ---------------------------------------------------------------
+                getDocTitle(docId) {
+                    const found = this.downloadableTemplates.find(d => d.id === docId);
+                    return found ? found.title : 'Documento Empresarial';
+                },
+
+                buildDocumentContent(docId) {
+                    const today = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+                    const sectorTxt = this.effectiveSectorLabel;
+                    const socTxt = this.currentSocietyObj.name;
+
+                    if (docId === 'estatutos_sas') {
+                        return `DOCUMENTO PRIVADO DE CONSTITUCIÓN\nSOCIEDAD POR ACCIONES SIMPLIFICADA (S.A.S.)\n\nEn la ciudad de [CIUDAD], Departamento de [DEPARTAMENTO], República de Colombia, a los [DÍA] días del mes de [MES] de 2026, [NOMBRE COMPLETO DEL ACCIONISTA O ACCIONISTAS], mayor(es) de edad, identificado(s) con cédula de ciudadanía No. [NÚMERO DE CÉDULA], domiciliado(s) en [DIRECCIÓN], declara(n) su voluntad de constituir una Sociedad por Acciones Simplificada (S.A.S.) regida por la Ley 1258 de 2008 y los siguientes estatutos:\n\nCAPÍTULO I - NOMBRE, NATURALEZA, DOMICILIO, OBJETO Y DURACIÓN\n\nARTÍCULO 1. NOMBRE Y NATURALEZA: La sociedad se denominará "[NOMBRE DE LA EMPRESA] S.A.S.", es de naturaleza comercial, de especie por acciones simplificada.\n\nARTÍCULO 2. DOMICILIO: El domicilio principal será la ciudad de [CIUDAD], pudiendo establecer sucursales o agencias dentro o fuera del país.\n\nARTÍCULO 3. OBJETO SOCIAL: La sociedad tendrá como objeto principal el desarrollo de actividades relacionadas con: ${sectorTxt} (Código CIIU [XXXX]), así como realizar cualquier actividad comercial o civil lícita en Colombia o en el extranjero.\n\nARTÍCULO 4. DURACIÓN: El término de duración de la sociedad será indefinido.\n\nCAPÍTULO II - CAPITAL Y ACCIONES\n\nARTÍCULO 5. CAPITAL AUTORIZADO: El capital autorizado es de $[MONTO EN NÚMEROS] COP, dividido en [NÚMERO] acciones ordinarias de valor nominal de $[VALOR NOMINAL] COP cada una.\nARTÍCULO 6. CAPITAL SUSCRITO: A la fecha se suscriben [NÚMERO] acciones por valor de $[MONTO SUSCRITO] COP.\nARTÍCULO 7. CAPITAL PAGADO: El capital suscrito ha sido pagado en su totalidad (o dentro de los 24 meses siguientes conforme a la Ley 1258 de 2008).\n\nCAPÍTULO III - REPRESENTACIÓN LEGAL\n\nARTÍCULO 8. REPRESENTANTE LEGAL: La representación legal estará a cargo de un Gerente. Se designa como Representante Legal Principal a [NOMBRE REPRESENTANTE LEGAL], identificado con C.C. No. [CÉDULA].\n\nEn constancia se firma en [CIUDAD], el ${today}.\n\n_______________________________\n[NOMBRE DEL ACCIONISTA CONSTITUYENTE]\nC.C. No. [NÚMERO DE CÉDULA]`;
+                    }
+
+                    if (docId === 'acta_constitucion') {
+                        return `ACTA DE ASAMBLEA CONSTITUTIVA Y NOMBRAMIENTOS\nEMPRESA: [NOMBRE DE LA EMPRESA] (${this.currentSocietyObj.badge})\nFECHA: ${today}\n\nEn la ciudad de [CIUDAD], siendo las [HORA], se reunieron los constituyentes de la sociedad con el fin de aprobar los estatutos sociales y realizar los nombramientos de administración:\n\n1. DESIGNACIÓN DE PRESIDENTE Y SECRETARIO DE LA REUNIÓN:\nSe designa como Presidente a [NOMBRE PRESIDENTE] y como Secretario a [NOMBRE SECRETARIO].\n\n2. APROBACIÓN DE ESTATUTOS SOCIALES:\nLeídos en su integridad los estatutos para el desarrollo de la actividad de ${sectorTxt}, son aprobados por unanimidad.\n\n3. NOMBRAMIENTOS Y ACEPTACIÓN DE CARGOS:\n- Representante Legal Principal: [NOMBRE COMPLETO], C.C. [NÚMERO].\n- Representante Legal Suplente: [NOMBRE SUPLENTE], C.C. [NÚMERO].\n\nLos designados presentes manifiestan que aceptan los cargos conferidos.\n\nNo habiendo más asuntos por tratar, se levanta la sesión.\n\n_____________________________          _____________________________\nPresidente de la Reunión               Secretario de la Reunión`;
+                    }
+
+                    if (docId === 'carta_banco') {
+                        return `[CIUDAD], ${today}\n\nSeñores:\n[NOMBRE DEL BANCO]\nOficina Empresarial / PYME\nCiudad\n\nAsunto: Solicitud de Apertura de Cuenta Empresarial y Certificación Bancaria para RUT\n\nRespetados señores:\n\nPor medio de la presente, yo [NOMBRE DEL REPRESENTANTE LEGAL / TITULAR], identificado con cédula de ciudadanía No. [NÚMERO DE CÉDULA], actuando en calidad de Representante Legal / Titular de [NOMBRE DE LA EMPRESA], con NIT / Pre-RUT No. [NÚMERO DE NIT], dedicada al sector de ${sectorTxt}, solicito amablemente la apertura de una Cuenta de Ahorros / Corriente Empresarial.\n\nAdjunto los siguientes soportes requeridos:\n1. Certificado de Existencia y Representación Legal / Matrícula Mercantil expedido por la Cámara de Comercio.\n2. Copia del Pre-RUT / RUT expedido por la DIAN.\n3. Fotocopia de mi documento de identidad ampliada al 150%.\n4. Composición accionaria (si aplica).\n\nAgradezco de antemano la expedición de la certificación bancaria correspondiente para culminar la formalización ante la DIAN.\n\nCordialmente,\n\n_______________________________\n[NOMBRE DEL REPRESENTANTE LEGAL]\nC.C. No. [NÚMERO]\nTeléfono: [TELÉFONO] · Correo: [CORREO ELECTRÓNICO]`;
+                    }
+
+                    if (docId === 'contrato_servicios') {
+                        return `CONTRATO DE PRESTACIÓN DE SERVICIOS INDEPENDIENTES\n\nEntre los suscritos a saber: [NOMBRE DE LA EMPRESA], identificada con NIT [NÚMERO], representada legalmente por [NOMBRE REPRESENTANTE], quien en adelante se denominará EL CONTRATANTE; y por otra parte [NOMBRE DEL CONTRATISTA], identificado con C.C./NIT [NÚMERO], quien se denominará EL CONTRATISTA, celebran el presente contrato regido por las siguientes cláusulas:\n\nPRIMERA - OBJETO: EL CONTRATISTA se obliga de manera independiente, con plena autonomía técnica y administrativa, a prestar los servicios de [DESCRIPCIÓN DEL SERVICIO] en el marco de las operaciones de ${sectorTxt}.\n\nSEGUNDA - VALOR Y FORMA DE PAGO: El valor total del contrato es de $[VALOR EN COP] más IVA (si aplica), pagaderos así: [FORMA DE PAGO], previa presentación de cuenta de cobro o factura electrónica y soporte de pago de seguridad social.\n\nTERCERA - PLAZO: El término de duración será de [NÚMERO DE MESES/DÍAS] contados a partir del [FECHA INICIO].\n\nCUARTA - CONFIDENCIALIDAD Y PROPIEDAD INTELECTUAL: Toda información, código, diseño o documento generado en ejecución del contrato será propiedad exclusiva de EL CONTRATANTE.\n\nPara constancia se firma en [CIUDAD] el ${today}.\n\n_____________________________          _____________________________\nEL CONTRATANTE                         EL CONTRATISTA`;
+                    }
+
+                    // Checklist Personalizado
+                    let lines = `HOJA DE RUTA Y CHECKLIST DE CONSTITUCIÓN EMPRESARIAL - RUTAEMPRESA COL 2026\n`;
+                    lines += `Fecha de exportación: ${today}\n`;
+                    lines += `Figura Jurídica seleccionada: ${socTxt}\n`;
+                    lines += `Sector Económico: ${sectorTxt}\n`;
+                    lines += `Progreso actual: ${this.progressPercentage}% (${this.completedMainStepsCount} de ${this.currentSteps.length} pasos completados)\n`;
+                    lines += `====================================================================\n\n`;
+
+                    this.currentSteps.forEach(step => {
+                        const status = this.isStepCompleted(step) ? '[COMPLETADO]' : (this.isStepInProgress(step) ? '[EN CURSO]' : '[PENDIENTE]');
+                        lines += `${status} ${step.title}\n`;
+                        lines += `Entidad: ${step.entity} | Tiempo estimado: ${step.duration}\n`;
+                        lines += `Descripción: ${step.desc}\n`;
+                        lines += `Requisitos:\n`;
+                        step.reqs.forEach((r, idx) => {
+                            const mark = this.isSubReqChecked(step.id, idx) ? '[X]' : '[ ]';
+                            lines += `   ${mark} ${r}\n`;
+                        });
+                        if (step.links && step.links.length) {
+                            lines += `Enlaces oficiales:\n`;
+                            step.links.forEach(l => {
+                                lines += `   - ${l.label}: ${l.url}\n`;
+                            });
+                        }
+                        lines += `\n--------------------------------------------------------------------\n\n`;
+                    });
+                    return lines;
+                },
+
+                getPlainDocPreview(docId) {
+                    if (!docId) return '';
+                    return this.buildDocumentContent(docId);
+                },
+
+                downloadDocument(docId) {
+                    const plainText = this.buildDocumentContent(docId);
+                    const title = this.getDocTitle(docId);
+
+                    // Generar HTML compatible con Microsoft Word (.doc) para edición inmediata
+                    const htmlDoc = `
+                        <html xmlns:o='urn:schemas-microsoft-com:office:office'
+                              xmlns:w='urn:schemas-microsoft-com:office:word'
+                              xmlns='http://www.w3.org/TR/REC-html40'>
+                        <head><meta charset='utf-8'><title>${title}</title>
+                        <style>
+                            body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #111827; margin: 2cm; }
+                            h1 { font-size: 14pt; color: #065f46; border-bottom: 1px solid #10b981; padding-bottom: 4px; }
+                            pre { font-family: Calibri, Arial, sans-serif; white-space: pre-wrap; font-size: 11pt; }
+                        </style>
+                        </head>
+                        <body>
+                            <h1>${title} - RutaEmpresa Col 2026</h1>
+                            <pre>${plainText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </body>
+                        </html>
+                    `;
+
+                    const blob = new Blob(['\ufeff', htmlDoc], { type: 'application/msword;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${docId}_RutaEmpresaCol_2026.doc`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+
+                    this.showToast('Descarga iniciada (.DOC)', `"${title}" listo para abrir y editar en Word.`);
+                },
+
+                downloadCustomChecklist() {
+                    this.downloadDocument('checklist_personalizado');
+                },
+
+                // ---------------------------------------------------------------
+                // SIMULADOR DE COSTOS RUES & NOTARÍA
+                // ---------------------------------------------------------------
+                calculateCost() {
+                    const cap = Math.max(0, parseFloat(this.capitalInput) || 0);
+                    // Cálculo referencial por tramos de activos/capital en Colombia
+                    let matricula = 56000;
+                    if (cap > 5000000 && cap <= 20000000) matricula = 148000;
+                    else if (cap > 20000000 && cap <= 50000000) matricula = 285000;
+                    else if (cap > 50000000 && cap <= 150000000) matricula = 540000;
+                    else if (cap > 150000000) matricula = 980000;
+
+                    const formulario = 7500;
+                    const impuesto = this.selectedSociety === 'natural' ? 52000 : Math.round(cap * 0.007);
+                    const notaria = (this.selectedSociety === 'ltda' || this.selectedSociety === 'sa')
+                        ? Math.round(180000 + cap * 0.003)
+                        : 0;
+
+                    this.calculatedCost = {
+                        matricula,
+                        formulario,
+                        impuesto,
+                        notaria,
+                        total: matricula + formulario + impuesto + notaria
+                    };
+                },
+
+                // ---------------------------------------------------------------
+                // TEST DE ELECCIÓN SOCIETARIA
+                // ---------------------------------------------------------------
+                evaluateTest() {
+                    const { socios, responsabilidad, tramite } = this.testAnswers;
+                    if (!socios || !responsabilidad || !tramite) return;
+
+                    if (socios === 'muchos') {
+                        this.testResult = {
+                            id: 'sa',
+                            tipo: 'Sociedad Anónima (S.A.) o S.A.S.',
+                            razon: 'Al contar con más de 5 accionistas o buscar inversión externa, la S.A. (o una S.A.S. con gobierno corporativo robusto) te permite emitir acciones y estructurar Junta Directiva.'
+                        };
+                    } else if (socios === 'uno' && responsabilidad === 'ilimitada' && tramite === 'agil') {
+                        this.testResult = {
+                            id: 'natural',
+                            tipo: 'Persona Natural Comerciante',
+                            razon: 'Como emprendes individualmente y buscas el menor costo y trámite inmediato sin estatutos, registrarte como Persona Natural Comerciante es la vía más rápida.'
+                        };
+                    } else if (socios === 'pocos' && tramite === 'tradicional') {
+                        this.testResult = {
+                            id: 'ltda',
+                            tipo: 'Sociedad de Responsabilidad Limitada (Ltda.)',
+                            razon: 'Ideal para grupos cerrados de 2 a 25 socios que prefieren formalizar mediante Escritura Pública y limitar la entrada de terceros sin aprobación de la junta de socios.'
+                        };
+                    } else {
+                        this.testResult = {
+                            id: 'sas',
+                            tipo: 'Sociedad por Acciones Simplificada (S.A.S.)',
+                            razon: 'Es la figura más recomendada en Colombia: protege tu patrimonio personal, se constituye por documento privado sin notaría y funciona tanto para 1 solo fundador como para varios socios.'
+                        };
+                    }
+                },
+
+                applyTestSociety() {
+                    if (!this.testResult) return;
+                    this.selectedSociety = this.testResult.id;
+                    this.saveProgress();
+                    this.activeTab = 'ruta';
+                    this.showToast('Filtro actualizado', `Tu ruta ahora está configurada para ${this.currentSocietyObj.name}.`);
+                },
+
+                // ---------------------------------------------------------------
+                // FILTRO DE FAQ
+                // ---------------------------------------------------------------
+                get filteredFaqs() {
+                    const q = this.faqSearch.trim().toLowerCase();
+                    if (!q) return this.faqs;
+                    return this.faqs.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
+                },
+
+                // ---------------------------------------------------------------
+                // CHATBOT EXTENSIBLE ("RutaBot") CON CONOCIMIENTO AMPLIO
+                // ---------------------------------------------------------------
+                clearChat() {
+                    this.chatMessages = [
+                        { sender: 'bot', text: 'Conversación reiniciada 🔄. ¿Qué tema empresarial o legal en Colombia quieres consultar?' }
+                    ];
+                },
+
+                askBot(question) {
+                    this.chatInput = question;
+                    this.submitChatInput();
+                },
+
+                submitChatInput() {
+                    const raw = this.chatInput.trim();
+                    if (!raw) return;
+
+                    this.chatMessages.push({ sender: 'user', text: raw });
+                    this.chatInput = '';
+
+                    setTimeout(() => {
+                        const reply = this.generateSmartBotReply(raw);
+                        this.chatMessages.push({ sender: 'bot', text: reply });
+                        this.$nextTick(() => {
+                            const box = document.getElementById('chatMessagesContainer');
+                            if (box) box.scrollTop = box.scrollHeight;
+                        });
+                    }, 350);
+                },
+
+                generateSmartBotReply(query) {
+                    const q = query.toLowerCase();
+                    const soc = this.currentSocietyObj.name;
+                    const sec = this.effectiveSectorLabel;
+
+                    // 1. Consulta sobre su sector o ruta actual
+                    if (q.includes('mi sector') || q.includes('mi ruta') || q.includes('que necesito') || q.includes('qué necesito')) {
+                        const step5 = this.currentSteps.find(s => s.id === 5);
+                        const reqList = step5 ? step5.reqs.map(r => `• ${r}`).join('\n') : '';
+                        return `Para tu configuración actual (${soc} en el sector "${sec}"), además de Cámara de Comercio y DIAN, debes cumplir con:\n\n${reqList}\n\n💡 Puedes marcar estos puntos en la pestaña "Ruta & Checklist".`;
+                    }
+
+                    // 2. Tipos de sociedad (SAS, Natural, Ltda, SA)
+                    if (q.includes('sas') || q.includes('s.a.s') || q.includes('natural') || q.includes('ltda') || q.includes('limitada') || q.includes('sociedad') || q.includes('diferencia')) {
+                        return `📌 Comparativa rápida en Colombia:\n• Persona Natural: 1 persona, sin estatutos, bajo costo, pero respondes con tu patrimonio personal.\n• S.A.S. (Ley 1258): 1 o más accionistas, documento privado (sin notaría), patrimonio blindado al capital aportado.\n• Ltda.: 2 a 25 socios, exige Escritura Pública en notaría.\n• S.A.: Mínimo 5 accionistas, Escritura Pública y Revisor Fiscal.\n\n📥 En la pestaña "Descargables" tienes la minuta editable de S.A.S. y el acta.`;
+                    }
+
+                    // 3. Código CIIU
+                    if (q.includes('ciiu') || q.includes('actividad economica') || q.includes('actividad económica')) {
+                        return `🔢 El Código CIIU (4 dígitos) clasifica tu actividad económica ante la DIAN y la Cámara de Comercio:\n• Puedes registrar hasta 4 códigos CIIU en el RUT (1 principal y hasta 3 secundarios).\n• Asegúrate de que tu objeto social en los estatutos coincida con los códigos CIIU elegidos.\n• Puedes verificarlo gratis en el portal RUES (rues.org.co) o en el buscador de la DIAN.`;
+                    }
+
+                    // 4. Régimen Simple de Tributación (RST) / Impuestos / IVA
+                    if (q.includes('simple') || q.includes('rst') || q.includes('impuesto') || q.includes('iva') || q.includes('renta') || q.includes('tribut')) {
+                        return `💰 Aspectos tributarios clave en Colombia:\n• Régimen Simple de Tributación (RST): Unifica Renta e ICA en una tarifa baja sobre ingresos brutos. Muy conveniente para emprendimientos y pymes.\n• Responsabilidad de IVA: Aplica si vendes bienes/servicios gravados y superas topes de ingresos (3.500 UVT para personas naturales; las sociedades suelen nacer responsables si su actividad es gravada).\n• ICA: Impuesto municipal de Industria y Comercio según los ingresos en cada ciudad.`;
+                    }
+
+                    // 5. DIAN, RUT y Facturación Electrónica
+                    if (q.includes('dian') || q.includes('rut') || q.includes('nit') || q.includes('factura') || q.includes('facturacion')) {
+                        return `🧾 Trámite DIAN y Facturación:\n1. Primero generas el Pre-RUT en muisca.dian.gov.co.\n2. Con el Pre-RUT y estatutos te registras en Cámara de Comercio y te asignan el NIT.\n3. Abres cuenta bancaria empresarial, cargas el certificado bancario en la DIAN y obtienes el RUT Definitivo.\n4. Solicitas resolución de numeración y activas la Facturación Electrónica (la DIAN ofrece un software gratuito).`;
+                    }
+
+                    // 6. INVIMA / Alimentos / Salud / Cosméticos
+                    if (q.includes('invima') || q.includes('alimento') || q.includes('restaurante') || q.includes('salud') || q.includes('cosmetico') || q.includes('sanitario')) {
+                        return `🏥 Requisitos sanitarios:\n• Si tienes restaurante o cafetería (consumo en sitio): necesitas Concepto Sanitario de la Secretaría de Salud de tu ciudad y curso de manipulación de alimentos (no requiere registro INVIMA por plato servido).\n• Si empacas, fabricas o comercializas alimentos procesados, suplementos o cosméticos: sí debes tramitar Registro, Permiso o Notificación Sanitaria ante el INVIMA.`;
+                    }
+
+                    // 7. Uso de suelo / Bomberos / Sayco
+                    if (q.includes('suelo') || q.includes('bombero') || q.includes('sayco') || q.includes('local') || q.includes('establecimiento')) {
+                        return `🏪 Para abrir un local físico al público debes gestionar:\n1. Concepto de Uso de Suelo en Planeación Municipal (verifica que la zona permita comercio).\n2. Certificado de seguridad contra incendios (Cuerpo de Bomberos).\n3. Pago de derechos de autor (Sayco & Acinpro) únicamente si reproduces música o videos protegidos en el local.\n4. Inscripción en el RIT de Hacienda Municipal para el impuesto ICA.`;
+                    }
+
+                    // 8. Costos / Tarifas / Cuanto vale
+                    if (q.includes('costo') || q.includes('precio') || q.includes('cuanto vale') || q.includes('cuánto vale') || q.includes('tarifa') || q.includes('plata')) {
+                        return `🧮 Los costos iniciales de constitución dependen de tu capital/activos:\n• Derechos de Matrícula Mercantil (según tabla UVT en Cámara de Comercio).\n• Formulario RUES (~$7.500 COP).\n• Impuesto de Registro Departamental (~0.7% del capital suscrito para sociedades).\n• Gastos de Notaría (solo si creas Ltda. o S.A.; la S.A.S. no paga notaría).\n\n👉 Usa la pestaña "Tarifas" aquí arriba para calcular el valor exacto según tu capital.`;
+                    }
+
+                    // 9. Contratación / Empleados / Seguridad Social
+                    if (q.includes('contrat') || q.includes('empleado') || q.includes('trabajador') || q.includes('nomina') || q.includes('nómina') || q.includes('arl')) {
+                        return `👥 Para vincular personal en Colombia:\n• Contrato Laboral (término fijo o indefinido): exige afiliar al trabajador a EPS, Fondo de Pensiones, ARL (mínimo 24h antes de iniciar labores) y Caja de Compensación Familiar.\n• Contrato de Prestación de Servicios: aplica para labores independientes sin subordinación; el contratista cotiza su propia seguridad social sobre el 40% del valor mensual.\n• Puedes descargar un modelo editable en la pestaña "Descargables".`;
+                    }
+
+                    // 10. Respuesta general inteligente para cualquier otra pregunta libre
+                    return `Sobre "${query}": en el marco legal colombiano (Código de Comercio, Ley 1258 y Estatuto Tributario), te recomiendo revisar estos 3 frentes para tu ${soc} en el sector ${sec}:\n\n1. Registro Mercantil: Verifica en RUES (rues.org.co) que tu nombre y código CIIU estén bien encuadrados.\n2. Obligaciones Fiscales: Valida en la DIAN si te conviene el Régimen Simple (RST) y habilita tu facturación electrónica.\n3. Soportes Legales: Descarga las minutas y contratos editables en la pestaña "Descargables".\n\nSi quieres profundizar en un punto específico (ej: costos, CIIU, INVIMA, contratos o impuestos), escríbeme la palabra clave.`;
+                }
+            };
+        }
+    </script>
+</body>
+</html>
